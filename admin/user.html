@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>文章列表</title>
+    <title>个人信息</title>
     <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/iconfont.css">
@@ -68,6 +68,66 @@
             </form>
         </div>
     </div>
+    <!-- 引入http.js文件 -->
+    <script src="./libs/http.js"></script>
+    <script>
+        //入口函数
+        $(function(){
+            //页面一加载，ajax请求个人详细信息，渲染页面
+            $.ajax({
+                type:'get',
+                url:BigNew.user_detail,
+                dataType:'json',
+                success:function(backData){
+                    //console.log(backData);
+                    // 渲染页面
+                    // $('input.username').val(backData.data.usernme);
+                    // $('input.nickname').val(backData.data.nickname);
+                    // $('input.email').val(backData.data.email);
+                    // $('input.password').val(backData.data.password);
+                    // $('img.user_pic').attr('src',backData.data.userPic);
+                    //遍历对象 优化代码
+                    for(var key in backData.data){
+                        $('input.' + key).val(backData.data[key]);
+                    }
+                    $('img.user_pic').attr('src',backData.data.userPic);
+                }
+            });
+            // 文件预览
+            $('#exampleInputFile').change(function(){
+                // 获取用户选择的图片
+                var file = this.files[0];
+                // 将文件转为src路径
+                var url = URL.createObjectURL(file);
+                // 将url 路径赋值给img 的src
+                $('.user_pic').attr('src',url);
+            });
+            //编辑个人信息
+            $('.btn-edit').on('click',function(e){
+              //阻止默认跳转
+              e.preventDefault();
+            //   // 创建formdata 对象
+              var form1 = document.querySelector('form');
+              var fd = new FormData(form1);
+              // 发送ajax请求
+              $.ajax({
+                  type:'post',
+                  url:BigNew.user_edit,
+                  data:fd,
+                  contentType:false,
+                  processData:false,
+                  dataType:'json',
+                  success:function(backData){
+                      console.log(backData);
+                      if(backData.code == 200){
+                          alert('修改成功');
+                          parent.window.location.reload();
+                      }
+                  }
+              }) 
+            })
+        })
+    </script>
 </body>
 
 </html>

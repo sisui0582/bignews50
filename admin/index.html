@@ -66,7 +66,7 @@
         <!-- 顶部栏 -->
         <div class="header_bar">
             <div class="user_center_link">
-                <a href="./user.html" target="main_frame">个人中心</a>
+                <a href="./user.html" onclick="$('#user').trigger('click')" target="main_frame">个人中心</a>
                 <img src="images/2.jpg" alt="person">
                 <a href="javascript:void(0)" class="logout"><i class="iconfont icon-tuichu"></i> 退出</a>
             </div>
@@ -137,13 +137,13 @@
                     $('.level02>li>a').first()[0].click();
                 } else {
                     //如果点击的不是文章管理一级菜单列表，则移除二级列表的选中样式
-                    $('..level02>li').removeClass('active');
+                    $('.level02>li').removeClass('active');
                 }
                 //2.二级列表
                 $('.level02>li').on('click',function(){
                     $(this).addClass('active').siblings().removeClass('active');
                 })
-            })
+            }); 
         });
     </script>
 </body>
