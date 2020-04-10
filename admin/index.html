@@ -87,13 +87,16 @@
                     }
                 }
             });
-            // 退出登录
-            // $('.logout').on('click',function(){
-            //     // 删除token
-            //     localStorage.removeItem('token');
-            //     // 跳转登录页面
-            //     window.location.href = './login.html';
-            // })
+            //退出登录
+            $('.logout').on('click',function(e){
+                e.preventDefault();
+                if(confirm('确定退出吗?')){
+                    // 删除token
+                localStorage.removeItem('token');
+                // 跳转登录页面
+                window.location.href = './login.html'
+                }
+            })
         });
     </script>
 </body>
