@@ -54,6 +54,8 @@
 
         </div>
     </div>
+    <!-- 引入http.js文件 -->
+    <script src="./libs/http.js"></script>
     <script>
         //入口函数
         $(function(){
@@ -74,7 +76,8 @@
             // 1.2 个人呢信息显示在页面上
             $.ajax({
                 type:'get',
-                url:'http://localhost:8080/api/v1/admin/user/info',
+                // url:'http://localhost:8080/api/v1/admin/user/info',
+                url:BigNew.user_info,
                 // headers:{
                 //     'Authorization':localStorage.getItem('token')
                 // },
