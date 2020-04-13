@@ -110,18 +110,18 @@
         //入口函数
         $(function () {
             // //页面一加载：请求分类列表渲染到下拉菜单
-            // $.ajax({
-            //     type: 'get',
-            //     url: BigNew.category_list,
-            //     dataType: 'json',
-            //     success: function (backData) {
-            //         //console.log(backData);
-            //         if (backData.code == 200) {
-            //             // 模板渲染到页面
-            //             $('#selCategory').html(template('category_list', backData));
-            //         }
-            //     }
-            // });
+            $.ajax({
+                type: 'get',
+                url: BigNew.category_list,
+                dataType: 'json',
+                success: function (backData) {
+                    //console.log(backData);
+                    if (backData.code == 200) {
+                        // 模板渲染到页面
+                        $('#selCategory').html(template('category_list', backData));
+                    }
+                }
+            });
             // //一进入页面,发送ajax请求,获取默认的文章类别/状态, 显示文章列表
             // $.ajax({
             //     type: 'get',
