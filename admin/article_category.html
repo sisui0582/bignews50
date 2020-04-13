@@ -64,14 +64,14 @@
                 <div class="modal-body">
                     <form>
                         <!-- 隐藏域:用来保存 编辑的的 序号 -->
-                        <input type="hidden" name="" id="categoryId">
+                        <input type="hidden" name="id" id="categoryId">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">分类名称:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <input type="text" name="name" class="form-control" id="recipient-name">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">分类别名:</label>
-                            <input class="form-control" id="message-text"></input>
+                            <input class="form-control" name="slug" id="message-text"></input>
                         </div>
                     </form>
                 </div>
@@ -129,6 +129,11 @@
                     $('#recipient-name').val($(e.relatedTarget).parent().prev().prev().text().trim());
                     $('#message-text').val($(e.relatedTarget).parent().prev().text().trim());
                     $('#categoryId').val($(e.relatedTarget).attr('data-id'));
+                    //上面三句话获取form表单,如果获取的数据过多可以使用formdata
+                    // jQuery 提供了一个方法serialize()方法 可以一次性获取form表单里带有name属性的标签
+                    //  var data = $('#myModal form').serialize();
+                    //  console.log(data);
+                    //  return;
                 }
             });
             //给模态框中的 新增/编辑 按钮点击事件
@@ -181,6 +186,7 @@
                             name: categoryName,
                             slug: categorySlug
                         },
+                        //data:data,
                         success: function (backData) {
                             //console.log(backData);
                             if (backData.code == 200) {
