@@ -123,34 +123,39 @@
                     window.location.href = './login.html'
                 }
             });
-            //3.点击左侧导航栏效果
-            $('.level01').on('click', function () {
-                // 3.1 排它思想修改样式
-                $(this).addClass('active').siblings().removeClass('active');
-                //1.2 如果点击的是文章管理：则应该下滑二级列表ul
-                if ($(this).next().hasClass('level02')) {
-                    //滑入滑出切换    
-                    $(this).next().slideToggle();
-                    //旋转90度切换   <向下旋转旋转90度
+            //三:左侧一级菜单(首页,文章管理,评论管理,个人中心)设置点击事件. 
+            $('div.level01').on('click', function () {
+                //3.1 当前点击的这个一级菜单添加active类,其他的兄弟一级菜单移除这个active类
+                $(this).addClass('active').siblings('div').removeClass('active');
+                //3.2 判断一下当前点击的是否是"文章管理"这个一级菜单. 
+                if ($(this).index() == 1) {
+                    //二级菜单ul 显示就隐藏,隐藏就显示
+                    $('ul.level02').slideToggle();
+                    //小尖尖(b标签)要做cs动画(实际上就是添加/移除一个类rotate0)
                     $(this).find('b').toggleClass('rotate0');
-                    //默认选中第一个 : DOM对象
-                    // 首页要明白给谁注册事件
-                    //第一个二级菜单(文章列表)里面的a标签,转成dom对象,触发点击事件
-                    //a标签的dom元素得到单击事件,不仅触发单击事件,还会触发超链接
-                    //触发超链接就会用ifram标签打开这个超链接对应的页面
-                    //触发单击事件,会事件冒泡,就相当于触发了他的父元素也就是li标签的单击事件
-                    // 就有了选中文字的颜色
-                    //$('.level02>li>a').first()[0].click();
+
+                    //首页你要明白给谁注册的事件:
+                    //第一个二级菜单(文章列表)里面的a标签,转成dom对象,触发他的单击事件. 
+                    //a标签的dom元素的单击事件, 不仅会触发单击事件,还会触发超链接
+                    //触发超链接就会用iframe标签打开这个超链接对应的页面
+                    //触发单击事件,会事件冒泡,那不就相当于触发了她的父亲也就是li标签的单击事件吗
+                    //那不就有了选中的文字颜色了吗?
                     $('ul.level02>li:eq(0)>a')[0].click();
-                } else {
-                    //如果点击的不是文章管理一级菜单列表，则移除二级列表的选中样式
-                    $('.level02>li').removeClass('active');
                 }
-                //2.二级列表
-                $('.level02>li').on('click',function(){
-                    $(this).addClass('active').siblings().removeClass('active');
-                })
-            }); 
+            })
+
+            //四:左侧二级菜单(文章列表,发表文章,文章类别管理)点击事件的. 
+            $('ul.level02>li').on('click', function () {
+                //当前点击的二级菜单添加active类,其他的兄弟二级菜单移除这个类. 
+                $(this).addClass('active').siblings('li').removeClass('active');
+
+                //待解决的需求:
+                //点击一级菜单 "文章管理" 默认选中二级菜单 "文章列表"
+                //有2种做法:
+                //一个简单
+                //一个难一点
+            })
+
         });
     </script>
 </body>
