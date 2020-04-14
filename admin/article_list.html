@@ -122,7 +122,7 @@
                     }
                 }
             });
-            // //一进入页面,发送ajax请求,获取默认的文章类别/状态, 显示文章列表
+            //一进入页面,发送ajax请求,获取默认的文章类别/状态, 显示文章列表
             // $.ajax({
             //     type: 'get',
             //     url: BigNew.article_query,
@@ -219,15 +219,18 @@
                             //console.log($('#selCategory').val().trim());
                             //调用模板引擎核心方法
                             $('tbody').html(template('article_list', backData));
-                            //点击筛选按钮重新渲染分页插件代码
-                            if (backData.data.data != 0 && callback != null) {
+                            //额外的事情
+                            //判断响应回来有没有数据
+                            if (backData.data.data.length != 0 && callback != null) {
                                 callback(backData);//调用回调函数,backData作为实参传递
                                 $('#pagination').show();//分页代码显示
                                 $('#pagination').next().hide();
                             } else if (backData.data.totalPage == 0 && currentPage == 1) {
+                                //如果你当前页是1,并且发送ajax请求又没有文章数,
+                                //那就说明你这个文章分类 中确实没有文章.
                                 $('#pagination').hide();
                                 $('#pagination').next().show();
-                            }else if(backData.data.totalPage == currentPage-1 && backData.data.data.length == 0){
+                            } else if (backData.data.totalPage == currentPage - 1 && backData.data.data.length == 0) {
                                 currentPage -= 1;
                                 //重绘页码
                                 $('#pagination').twbsPagination('changeTotalPages', backData.data.totalPage, currentPage);
@@ -253,34 +256,37 @@
                     }
                 })
             });
-            // 给筛选一个点击事件
-            getData(1, function (backData) {
-                $('#btnSearch').on('click', function (e) {
-                    e.preventDefault();
-                    currentPage = 1;
+            //三:点击筛选按钮,获取符合条件 的文章们,渲染到页面上. 
+            $('#btnSearch').on('click', function (e) {
+                e.preventDefault(); //阻止默认的提交行为
+                //把当前页改成1
+                currentPage = 1;
+                //发送ajax请求
+                getData(1, function (backData) {
+                    //点击筛选按钮,由于改变了筛选条件,所以筛选出来的数据总页码会发生改变. 
+                    //所以要根据新的总页数, 来重新绘制 分页结构. 
                     $('#pagination').twbsPagination('changeTotalPages', backData.data.totalPage, 1);
-
-                });
-            });
+                })
+            })
             // 删除文章
             // 3.1 给删除按钮注册委托事件（动态添加的元素需要注册动态事件）
             // 3.2 获取当前点击按钮自定义属性 data - id
             // 3.3 ajax发送请求
             // 3.4 响应之后刷新页面
-            $('tbody').on('click','.delete',function(){
+            $('tbody').on('click', '.delete', function () {
                 $.ajax({
-                    type:'post',
-                    url:BigNew.article_delete,
-                    data:{
-                      id:$(this).attr('data-id')
+                    type: 'post',
+                    url: BigNew.article_delete,
+                    data: {
+                        id: $(this).attr('data-id')
                     },
-                    dataType:'json',
-                    success:function(backData){
-                        if(backData.code == 204){
+                    dataType: 'json',
+                    success: function (backData) {
+                        if (backData.code == 204) {
                             //alert('删除成功');
                             //由于删除了数据,总的页码发生改变
                             //那就应该根据的新的总页码,重新生成 分页结构
-                            getData(currentPage,function(backData){
+                            getData(currentPage, function (backData) {
                                 $('#pagination').twbsPagination('changeTotalPages', backData.data.totalPage, currentPage);
                             });
                             //window.location.reload();
@@ -290,9 +296,9 @@
             });
             // 点击发表文章按钮 
             //左边导航栏,导航到发表文章
-            $('#release_btn').on('click',function(){
+            $('#release_btn').on('click', function () {
                 parent.$('ul.leve102>li:eq(1)').click();
-            }) 
+            });
         })
     </script>
 </body>
