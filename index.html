@@ -301,7 +301,7 @@
     <!-- 文章类型 -->
     <script id="category_remp" type="text/html">
     {{each data v}}
-    <li><a href="./list.html">{{v.name}}</a></li>
+    <li><a href="./list.html?categoryId={{v.id}}">{{v.name}}</a></li>
     {{/each}}
     </script>
 
@@ -386,13 +386,8 @@
                 if(searchTxt == ""){
                     alert("搜索关键字为空!");
                     return;
-                }else if(isNaN(parseInt(searchTxt)) == false){
-                    alert('搜索关键字为文本内容');
-                    return;
-                }else {
-                    window.location.href = "./list.html?searchTxt="+searchTxt;
-
                 }
+                window.location.href = './list.html?search='+searchTxt;
             });
         })
     </script>
