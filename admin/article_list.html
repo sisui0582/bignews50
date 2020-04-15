@@ -296,15 +296,9 @@
             });
             // 点击发表文章按钮 
             //左边导航栏,导航到发表文章
-            // $('#release_btn').on('click', function () {
-            //     parent.$('ul.leve102>li:eq(1)').click();               
-            // });
-            // 点击编辑文章按钮 
-            //左边导航栏,导航到发表文章
-            $('.btn-xs').on('click',function(e){
-                e.preventDefault();
-                window.location.href = './article_edit.html';
-            })
+            $('#release_btn').on('click', function () {
+                parent.$('ul.leve102>li:eq(1)').click();               
+            });
         })
     </script>
 </body>
