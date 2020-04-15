@@ -99,7 +99,7 @@
         <td class="text-center">{{v.date}}</td>
         <td class="text-center">{{v.state}}</td>
         <td class="text-center">
-            <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
+            <a href="article_edit.html?id="{{v.id}}"" class="btn btn-default btn-xs">编辑</a>
             <a href="javascript:void(0);" data-id="{{v.id}}" class="btn btn-danger btn-xs delete">删除</a>
         </td>
     </tr>
@@ -296,9 +296,15 @@
             });
             // 点击发表文章按钮 
             //左边导航栏,导航到发表文章
-            $('#release_btn').on('click', function () {
-                parent.$('ul.leve102>li:eq(1)').click();
-            });
+            // $('#release_btn').on('click', function () {
+            //     parent.$('ul.leve102>li:eq(1)').click();               
+            // });
+            // 点击编辑文章按钮 
+            //左边导航栏,导航到发表文章
+            $('.btn-xs').on('click',function(e){
+                e.preventDefault();
+                window.location.href = './article_edit.html';
+            })
         })
     </script>
 </body>
