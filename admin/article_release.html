@@ -130,28 +130,58 @@
             var editor = new E('#editor');
             editor.create();
 
-
             //------------------------------------
-            // 发布按钮
-            $('.btn-release').on('click',function(e){
+            //发布文章为 已发布
+            $('.btn-release').on('click', function (e) {
                 e.preventDefault();
-                //创建formData 对象
+                //创建FormData对象
                 var fd = new FormData(document.querySelector('form'));
-                // 文章内容,state 追加到 fdzhong
-                fd.append('content',editor.txt.html());
-                fd.append('state','已发布');
+                //检查一下form表单里面获取数据的标签有没有name属性,以及name属性的值是否和接口的键一致. 
+                //往formData对象中追加内容(富文本编辑器wangEditor获取到的正文,以及已发布)
+                fd.append('content', editor.txt.html());
+                fd.append('state', '已发布');
+                //发送ajax请求,完成文章发布
                 $.ajax({
-                    type:'post',
-                    url:'http://localhost:8080/api/v1/admin/article/publish',
-                    data:fd,
-                    contentType:false,
-                    processData:false,
-                    success:function(backData){
-                        console.log(backData);
-                        
+                    type: 'post',
+                    url: BigNew.article_publish,
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function (backData) {
+                        if (backData.code == 200) {
+                            alert('发表成功!');
+                            parent.$('ul.level02>li:eq(0)').click();
+                            window.location.href = './article_list.html';
+                        }
                     }
-                })
+                });
             })
+
+            //发布文章为  草稿
+            $('.btn-draft').on('click', function (e) {
+                e.preventDefault();
+                //创建FormData对象
+                var fd = new FormData(document.querySelector('form'));
+                //检查一下form表单里面获取数据的标签有没有name属性,以及name属性的值是否和接口的键一致. 
+                //往formData对象中追加内容(富文本编辑器wangEditor获取到的正文,以及已发布)
+                fd.append('content', editor.txt.html());
+                //发送ajax请求,完成文章发布
+                $.ajax({
+                    type: 'post',
+                    url: BigNew.article_publish,
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function (backData) {
+                        if (backData.code == 200) {
+                            alert('保存草稿成功!');
+                            parent.$('ul.level02>li:eq(0)').click();
+                            window.location.href = './article_list.html';
+                        }
+                    }
+                });
+            })
+
         })
     </script>
 </body>
